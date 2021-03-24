@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>armdot_rider_sample</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ArmDot.Client" Version="2021.9.0" />
+      <PackageReference Include="ArmDot.Engine.MSBuildTasks" Version="2021.9.0" />
+    </ItemGroup>
+
+    <Target Name="Protect" AfterTargets="Build">
+        <ItemGroup>
+            <Assemblies Include="$(TargetDir)$(TargetFileName)" />
+        </ItemGroup>
+        <ArmDot.Engine.MSBuildTasks.ObfuscateTask Inputs="@(Assemblies)" ReferencePaths="@(_ResolveAssemblyReferenceResolvedFiles->'%(RootDir)%(Directory)')" />
+    </Target>
+    
+</Project>
